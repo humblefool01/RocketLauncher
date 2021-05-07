@@ -18,17 +18,23 @@ public class PerlinTextureGenerator : MonoBehaviour
     public float scale = 10f;
     private float xOffset = 100f;
     private float yOffset = 100f;
+    private Renderer renderer;
 
     public ColorMap[] colors;
 
     private void OnValidate()
     {
-        Renderer renderer = this.GetComponent<Renderer>();
+        renderer = this.GetComponent<Renderer>();
         xOffset = Random.Range(0, 9999);
         yOffset = Random.Range(0, 9999);
         renderer.sharedMaterial.mainTexture = GenerateTexture();
     }
     void Start()
+    {
+
+    }
+
+    void Update()
     {
 
     }
@@ -42,12 +48,14 @@ public class PerlinTextureGenerator : MonoBehaviour
             {
                 Color color = new Color(0, 0, 0, 0);
                 int colorIndex = 0;
-                float sample = Mathf.PerlinNoise((float)x / width * scale + xOffset, (float)y / height * scale + yOffset);
+                float sample = 0;
+                sample = Mathf.PerlinNoise((float)x / width * scale + xOffset, (float)y / height * scale + yOffset);
+
                 while (colorIndex < colors.Length)
                 {
                     if (sample <= colors[colorIndex].height)
                     {
-                        color += colors[colorIndex].color;
+                       color = colors[colorIndex].color;
                         break;
                     }
                     colorIndex++;

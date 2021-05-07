@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1885809644443355961}
   - component: {fileID: 8145953225048213974}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TrajectoryPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

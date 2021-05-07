@@ -14,6 +14,7 @@ public class Rocket : MonoBehaviour
     [HideInInspector]
     public bool _launch = false;
     private float thrust = 0f;
+    private bool firstPerson = false;
     private Vector3 launchDirection;
     private Vector3 mouseWorldPositionRight;
     private Vector3 mouseWorldPositionLeft;
@@ -34,6 +35,18 @@ public class Rocket : MonoBehaviour
                 this.OnThrustChanged?.Invoke();
                 this.thrust = value;
             }
+        }
+    }
+
+    public bool FirstPerson
+    {
+        get
+        {
+            return this.firstPerson;
+        }
+        set
+        {
+            this.firstPerson = value;
         }
     }
 
@@ -71,6 +84,11 @@ public class Rocket : MonoBehaviour
         // Direction
         if (Input.GetMouseButton(1))
         {
+            if (this._launch)
+            {
+                return;
+            }
+
             Vector3 mouseScreenPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z);
             mouseWorldPositionRight  = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
             this.LaunchDirection = mouseWorldPositionRight - this.transform.position;
@@ -79,6 +97,11 @@ public class Rocket : MonoBehaviour
         // Thrust
         if (Input.GetMouseButton(0))
         {
+            if (this._launch)
+            {
+                return;
+            }
+
             Vector3 mouseScreenPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z);
             mouseWorldPositionLeft = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
             this.Thrust = Vector3.Distance(mouseWorldPositionLeft, this.transform.position);
